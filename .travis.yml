@@ -17,4 +17,5 @@ before_script:
 script:
   - vendor/bin/phpcs --standard=psr2 Ffm/
   - vendor/bin/phpstan analyse Ffm/
+  - vendor/bin/phpmd Ffm text phpmd.xml --suffixes php
   - vendor/bin/phpunit --config phpunit.xml
