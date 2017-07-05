@@ -9,7 +9,9 @@ document various hook types like observers and aspects for several types of fram
 
 ## Usage
 - Install via composer
-- run via `vendor/bin/documenter`
+- run via `vendor/bin/documenter [job] [path] [link type] [git owner/project] [branch] [output format]`
+
+For example: `vendor/bin/documenter magento1:observers app/code/community github ffm/project master markdown`
 
 ## Authors
 - Sander Mangel
