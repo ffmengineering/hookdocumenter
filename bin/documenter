@@ -3,8 +3,6 @@
 
 define('DOCUMENTER_PROJECT_ROOT_DIR', __DIR__ . '/../../');
 
-require __DIR__ . '/../../examples/foo.php';
-
 use Ffm\Hookdocs\Console\Application;
 
 if (is_file(__DIR__.'/../autoload.php') === true) {
