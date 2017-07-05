@@ -1,0 +1,27 @@
+{
+    "name": "ffm/hookdocs",
+    "description": "Documents observers, rewrites via doc blocks",
+    "type": "project",
+    "require": {
+        "phpdocumentor/reflection-docblock": "^3.1",
+        "symfony/console": "^3.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sander Mangel",
+            "email": "sander@sandermangel.nl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ffm\\Hookdocs\\": "Ffm/Hookdocs/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Hookdocs\\": "tests/Hookdocs/"
+        }
+    },
+    "bin": ["bin/documenter"]
+}
