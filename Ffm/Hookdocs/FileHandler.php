@@ -31,21 +31,6 @@ class FileHandler
     }
 
     /**
-     * @param string $fileBody
-     * @return string
-     */
-    public function getClassPath(string $fileBody): string
-    {
-        preg_match('/namespace\s([\w\\\]+)/', $fileBody, $namespaceMatches);
-        preg_match('/class\s([\w_]+)/', $fileBody, $classMatches);
-
-        $namespace = $namespaceMatches[1] ?? '';
-        $class = $classMatches[1] ?? '';
-
-        return $namespace . '\\' . trim($class);
-    }
-
-    /**
      * @return TableRow[]
      */
     public function getDocComments(): array

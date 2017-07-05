@@ -37,10 +37,10 @@ class Markdown implements TableInterface
         $output = '';
         array_walk($this->rows, function($row) use (&$output) {
             /** @var TableRow $row */
-            $output .= '| ' . implode(' | ', $row->getCellValues()) . ' |' . PHP_EOL;
+            $output .= '| ' . implode(' | ', $row->getCellValues($row::FORMAT_MARKDOWN)) . ' |' . PHP_EOL;
         });
 
-        return $output . PHP_EOL;
+        return $output;
     }
 
     /**
