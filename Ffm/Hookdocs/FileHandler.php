@@ -71,7 +71,11 @@ class FileHandler
                         $method = null;
                         foreach($methods->getAttributes() as $key => $attribute) {
                             if ($key === 'comments') {
-                                $docblock = $factory->create($attribute[0]->getText());
+                                try {
+                                    $docblock = $factory->create($attribute[0]->getText());
+                                } catch(\InvalidArgumentException $error) { // malformed DocComment
+                                    continue;
+                                }
 
                                 $typeFactory = new $this->typeClass($method, $docblock, $classObject, $this->linkClass);
                                 foreach ($docblock->getTagsByName($typeFactory::TAG_NAME) as $tag) {
