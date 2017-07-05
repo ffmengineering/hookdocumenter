@@ -23,8 +23,16 @@ class ObserversCommand extends Command
 
         $this->addArgument('path', InputArgument::REQUIRED, 'path to files to test');
         $this->addArgument('linkType', InputArgument::REQUIRED, 'type of link');
-        $this->addArgument('linkProject', InputArgument::REQUIRED, 'slug in url for project. Usually something like `owner/project-name`');
-        $this->addArgument('linkBranch', InputArgument::REQUIRED, 'branch used for the link. Usually something like `develop` or `master`');
+        $this->addArgument(
+            'linkProject',
+            InputArgument::REQUIRED,
+            'slug in url for project. Usually something like `owner/project-name`'
+        );
+        $this->addArgument(
+            'linkBranch',
+            InputArgument::REQUIRED,
+            'branch used for the link. Usually something like `develop` or `master`'
+        );
         $this->addArgument('output', InputArgument::REQUIRED, 'Type of output (Markdown, Html)');
     }
 

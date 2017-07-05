@@ -36,11 +36,14 @@ class TableRow
     {
         switch ($format) {
             case self::FORMAT_HTML:
-                $link = "<a href=\"{$this->link}\">{$this->method}</a>"; break;
+                $link = "<a href=\"{$this->link}\">{$this->method}</a>";
+                break;
             case self::FORMAT_MARKDOWN:
-                $link = "[{$this->method}]({$this->link})"; break;
+                $link = "[{$this->method}]({$this->link})";
+                break;
             default:
-                $link = $this->method; break;
+                $link = $this->method;
+                break;
         }
 
         return [$this->source, $link, $this->description];
