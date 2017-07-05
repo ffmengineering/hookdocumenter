@@ -68,20 +68,18 @@ class FileHandler
                     $classObject = new ClassObject($node->name, $namespace, $this->file->getRealPath());
 
                     foreach ($node->getMethods() as $methods) {
-                        if ($methods->name === '_setAdminuserToOrder') {
-                            $method = null;
-                            foreach($methods->getAttributes() as $key => $attribute) {
-                                if ($key === 'comments') {
-                                    $docblock = $factory->create($attribute[0]->getText());
+                        $method = null;
+                        foreach($methods->getAttributes() as $key => $attribute) {
+                            if ($key === 'comments') {
+                                $docblock = $factory->create($attribute[0]->getText());
 
-                                    $typeFactory = new $this->typeClass($method, $docblock, $classObject, $this->linkClass);
-                                    foreach ($docblock->getTagsByName($typeFactory::TAG_NAME) as $tag) {
-                                        $tagsOutput[] =  $typeFactory();
-                                    }
+                                $typeFactory = new $this->typeClass($method, $docblock, $classObject, $this->linkClass);
+                                foreach ($docblock->getTagsByName($typeFactory::TAG_NAME) as $tag) {
+                                    $tagsOutput[] =  $typeFactory();
                                 }
-                                if ($key === 'startLine') {
-                                    $method = new MethodObject($methods->name, $attribute);
-                                }
+                            }
+                            if ($key === 'startLine') {
+                                $method = new MethodObject($methods->name, $attribute);
                             }
                         }
                     }
@@ -92,30 +90,6 @@ class FileHandler
             echo 'Parse Error: ', $e->getMessage();
             return [];
         }
-        /*exit;
-        $classPath = $this->getClassPath($contents);
-
-        try {
-            $reflection = new \ReflectionClass($classPath);
-        } catch (\ReflectionException $error) {
-            echo $error->getMessage() . PHP_EOL;
-            return [];
-        }
-
-        $factory = DocBlockFactory::createInstance();
-        $tagsOutput = [];
-        foreach ($reflection->getMethods() as $method) {
-            if (!$method->getDocComment()) { // no DocComment presend
-                continue;
-            }
-
-            $docblock = $factory->create($method->getDocComment());
-
-            $typeFactory = new $this->typeClass($method, $docblock, $reflection, $this->linkClass);
-            foreach ($docblock->getTagsByName($typeFactory::TAG_NAME) as $tag) {
-                $tagsOutput[] =  $typeFactory();
-            }
-        }*/
 
         return $tagsOutput;
     }
