@@ -54,11 +54,11 @@ class FileHandler
 
                     foreach ($node->getMethods() as $methods) {
                         $method = null;
-                        foreach($methods->getAttributes() as $key => $attribute) {
+                        foreach ($methods->getAttributes() as $key => $attribute) {
                             if ($key === 'comments') {
                                 try {
                                     $docblock = $factory->create($attribute[0]->getText());
-                                } catch(\InvalidArgumentException $error) { // malformed DocComment
+                                } catch (\InvalidArgumentException $error) { // malformed DocComment
                                     continue;
                                 }
 

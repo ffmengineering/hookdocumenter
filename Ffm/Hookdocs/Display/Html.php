@@ -35,7 +35,7 @@ class Html implements TableInterface
     public function getBody(): string
     {
         $output = '<tbody>';
-        array_walk($this->rows, function($row) use (&$output) {
+        array_walk($this->rows, function ($row) use (&$output) {
             /** @var TableRow $row */
             $output .= '<tr><td>' . implode('</td><td>', $row->getCellValues($row::FORMAT_HTML)) . '</td></tr>';
         });

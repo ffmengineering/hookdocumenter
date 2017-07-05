@@ -4,7 +4,6 @@ namespace Ffm\Hookdocs\Linktypes;
 
 class None implements LinkInterface
 {
-
     public function __construct(string $project, string $branch)
     {
         $this->slug = "{$project}/src/{$branch}";
