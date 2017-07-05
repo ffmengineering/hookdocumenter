@@ -4,6 +4,9 @@ namespace Ffm\Hookdocs\Display;
 
 class TableRow
 {
+    const FORMAT_HTML = 1;
+    const FORMAT_MARKDOWN = 2;
+
     protected $source;
     protected $method;
     protected $link;
@@ -26,14 +29,20 @@ class TableRow
     }
 
     /**
+     * @param int $format
      * @return array
      */
-    public function getCellValues(): array
+    public function getCellValues(int $format = 0): array
     {
-        return [
-            $this->source,
-            "[{$this->method}]({$this->link})",
-            $this->description,
-        ];
+        switch ($format) {
+            case self::FORMAT_HTML:
+                $link = "<a href=\"{$this->link}\">{$this->method}</a>"; break;
+            case self::FORMAT_MARKDOWN:
+                $link = "[{$this->method}]({$this->link})"; break;
+            default:
+                $link = $this->method; break;
+        }
+
+        return [$this->source, $link, $this->description];
     }
 }

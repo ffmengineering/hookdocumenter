@@ -24,7 +24,7 @@ class Html implements TableInterface
      */
     public function getHeader(): string
     {
-        return '<table with="100%" cellpadding="2" cellspacing="0">' .
+        return '<table>' .
             '<thead><tr><th>' . implode('</th><th>', $this->headers) . '</th></tr></thead>';
     }
 
@@ -37,7 +37,7 @@ class Html implements TableInterface
         $output = '<tbody>';
         array_walk($this->rows, function($row) use (&$output) {
             /** @var TableRow $row */
-            $output .= '<tr><td>' . implode('</td><td>', $row->getCellValues()) . '</td></tr>';
+            $output .= '<tr><td>' . implode('</td><td>', $row->getCellValues($row::FORMAT_HTML)) . '</td></tr>';
         });
 
         return $output . '</tbody>';
