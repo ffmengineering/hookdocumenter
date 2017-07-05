@@ -32,6 +32,9 @@ class FileHandler
 
     /**
      * @return TableRow[]
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     * @todo reduce cyclomatic complexity of traversing the class
      */
     public function getDocComments(): array
     {
