@@ -1,17 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-define('DOCUMENTER_PROJECT_ROOT_DIR', __DIR__ . '/../../');
-
-require __DIR__ . '/../../examples/foo.php';
-
 use Ffm\Hookdocs\Console\Application;
 
-if (is_file(__DIR__.'/../autoload.php') === true) {
-    include_once __DIR__.'/../autoload.php';
+if (file_exists(__DIR__ . '/../../../autoload.php')) {
+    define('DOCUMENTER_PROJECT_ROOT_DIR', __DIR__ . '/../../../../');
+    require_once __DIR__ . '/../../../autoload.php';
 } else {
-    fwrite(STDERR, 'No composer autoloader found. Make sure composer is installed and a vendor/autoload.php is created:' . PHP_EOL);
-    exit(1);
+    define('DOCUMENTER_PROJECT_ROOT_DIR', __DIR__ . '/../../');
+    require_once __DIR__ . '/../autoload.php';
 }
 
 $app = new Application(Application::APP_NAME, Application::APP_VERSION);

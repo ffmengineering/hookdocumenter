@@ -19,9 +19,9 @@ class EventType implements TypeInterace
      */
     public function __invoke(): TableRow
     {
-        $namespace = explode('\\', $this->class->getNamespaceName());
+        $namespace = explode('_', $this->class->getName());
         $namespace = array_slice($namespace, 0, 2);
-        $module = implode('/', $namespace);
+        $module = implode('_', $namespace);
 
         /** @var BaseTag $eventTags */
         $tags = $this->docBlock->getTagsByName(self::TAG_NAME);

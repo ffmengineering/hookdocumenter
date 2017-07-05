@@ -1,4 +1,4 @@
-#Magento 1 observers
+# Magento 1 observers
 
 Use the following syntax for documenting an observer method
 

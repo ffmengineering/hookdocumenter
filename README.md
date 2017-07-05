@@ -1,9 +1,9 @@
-#Hook Documenter
+# Hook Documenter
 
 document various hook types like observers and aspects for several types of frameworks
 
 ## Support
-- [Magento 1 Observers](https://github.com/ffmengineering/hookdocumenter/blob/docs/magento1-observers.md)
+- [Magento 1 Observers](https://github.com/ffmengineering/hookdocumenter/blob/master/docs/magento1-observers.md)
 
 ## Usage
 - Install via composer

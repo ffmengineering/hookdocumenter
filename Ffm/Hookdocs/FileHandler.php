@@ -5,6 +5,11 @@ namespace Ffm\Hookdocs;
 use Ffm\Hookdocs\Display\TableRow;
 use Ffm\Hookdocs\Linktypes\LinkInterface;
 use phpDocumentor\Reflection\DocBlockFactory;
+use PhpParser\Comment\Doc;
+use PhpParser\Error;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\ParserFactory;
 
 class FileHandler
 {
@@ -32,7 +37,7 @@ class FileHandler
     public function getClassPath(string $fileBody): string
     {
         preg_match('/namespace\s([\w\\\]+)/', $fileBody, $namespaceMatches);
-        preg_match('/class\s([\w_\r\n\s]+){/', $fileBody, $classMatches);
+        preg_match('/class\s([\w_]+)/', $fileBody, $classMatches);
 
         $namespace = $namespaceMatches[1] ?? '';
         $class = $classMatches[1] ?? '';
@@ -46,9 +51,56 @@ class FileHandler
     public function getDocComments(): array
     {
         $contents = $this->file->fread($this->file->getSize());
+
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $factory = DocBlockFactory::createInstance();
+        $tagsOutput = [];
+        $namespace = '\\';
+
+        try {
+            $stmts = $parser->parse($contents);
+
+            foreach ($stmts as $node) {
+                if ($node instanceof Namespace_) {
+                    $namespace = $node->name;
+                }
+                if ($node instanceof Class_) {
+                    $classObject = new ClassObject($node->name, $namespace, $this->file->getRealPath());
+
+                    foreach ($node->getMethods() as $methods) {
+                        if ($methods->name === '_setAdminuserToOrder') {
+                            $method = null;
+                            foreach($methods->getAttributes() as $key => $attribute) {
+                                if ($key === 'comments') {
+                                    $docblock = $factory->create($attribute[0]->getText());
+
+                                    $typeFactory = new $this->typeClass($method, $docblock, $classObject, $this->linkClass);
+                                    foreach ($docblock->getTagsByName($typeFactory::TAG_NAME) as $tag) {
+                                        $tagsOutput[] =  $typeFactory();
+                                    }
+                                }
+                                if ($key === 'startLine') {
+                                    $method = new MethodObject($methods->name, $attribute);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // $stmts is an array of statement nodes
+        } catch (Error $e) {
+            echo 'Parse Error: ', $e->getMessage();
+            return [];
+        }
+        /*exit;
         $classPath = $this->getClassPath($contents);
 
-        $reflection = new \ReflectionClass($classPath);
+        try {
+            $reflection = new \ReflectionClass($classPath);
+        } catch (\ReflectionException $error) {
+            echo $error->getMessage() . PHP_EOL;
+            return [];
+        }
 
         $factory = DocBlockFactory::createInstance();
         $tagsOutput = [];
@@ -63,7 +115,7 @@ class FileHandler
             foreach ($docblock->getTagsByName($typeFactory::TAG_NAME) as $tag) {
                 $tagsOutput[] =  $typeFactory();
             }
-        }
+        }*/
 
         return $tagsOutput;
     }
