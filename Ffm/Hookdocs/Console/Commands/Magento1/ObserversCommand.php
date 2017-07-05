@@ -30,7 +30,7 @@ class ObserversCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $path = $input->getArgument('path');
+        $path = DOCUMENTER_PROJECT_ROOT_DIR . $input->getArgument('path');
         $link = $input->getArgument('linkType');
         $project = $input->getArgument('linkProject');
         $branch = $input->getArgument('linkBranch');
@@ -44,12 +44,12 @@ class ObserversCommand extends Command
             $file = new FileHandler(new \SplFileObject($path), EventType::class, $linkClass);
             $records = $file->getDocComments();
         } elseif (is_dir($path)) {
-            $iterator = new \RecursiveIteratorIterator(
-                new PhpFilterIterator(new \RecursiveDirectoryIterator($path)),
-                \RecursiveIteratorIterator::SELF_FIRST
-            );
-            foreach ($iterator as $fileInfo) {
-                $file = new FileHandler($fileInfo->openFile(), EventType::class, $linkClass);
+            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+            $Regex = new \RegexIterator($iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH);
+            foreach ($Regex as $fileInfo) {
+                $fileInfo = new \SplFileObject($fileInfo[0]);
+
+                $file = new FileHandler($fileInfo, EventType::class, $linkClass);
                 $records = array_merge($records, $file->getDocComments());
             }
         } else {

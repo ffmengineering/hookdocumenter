@@ -32,7 +32,7 @@ class FileHandler
     public function getClassPath(string $fileBody): string
     {
         preg_match('/namespace\s([\w\\\]+)/', $fileBody, $namespaceMatches);
-        preg_match('/class\s([\w_\r\n\s]+){/', $fileBody, $classMatches);
+        preg_match('/class\s([\w_]+)/', $fileBody, $classMatches);
 
         $namespace = $namespaceMatches[1] ?? '';
         $class = $classMatches[1] ?? '';
@@ -48,7 +48,12 @@ class FileHandler
         $contents = $this->file->fread($this->file->getSize());
         $classPath = $this->getClassPath($contents);
 
-        $reflection = new \ReflectionClass($classPath);
+        try {
+            $reflection = new \ReflectionClass($classPath);
+        } catch (\ReflectionException $error) {
+            echo $error->getMessage() . PHP_EOL;
+            return [];
+        }
 
         $factory = DocBlockFactory::createInstance();
         $tagsOutput = [];
