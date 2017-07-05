@@ -2,7 +2,9 @@
 
 namespace Ffm\Hookdocs\Magento1;
 
+use Ffm\Hookdocs\ClassObject;
 use Ffm\Hookdocs\Linktypes\LinkInterface;
+use Ffm\Hookdocs\MethodObject;
 use phpDocumentor\Reflection\DocBlock;
 
 trait TypeTrait
@@ -14,12 +16,12 @@ trait TypeTrait
 
     /**
      * EventType constructor.
-     * @param \ReflectionMethod $method
+     * @param MethodObject $method
      * @param DocBlock $docBlock
-     * @param \ReflectionClass $class
+     * @param ClassObject $class
      * @param LinkInterface $linkClass
      */
-    public function __construct(\ReflectionMethod $method, DocBlock $docBlock, \ReflectionClass $class, LinkInterface $linkClass)
+    public function __construct(MethodObject $method, DocBlock $docBlock, ClassObject $class, LinkInterface $linkClass)
     {
         $this->method = $method;
         $this->docBlock = $docBlock;
