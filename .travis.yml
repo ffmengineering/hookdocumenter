@@ -15,4 +15,6 @@ before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
+  - vendor/bin/phpcs --standard=psr2 Ffm/
+  - vendor/bin/phpstan
   - vendor/bin/phpunit --config phpunit.xml
