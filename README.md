@@ -1,5 +1,7 @@
 # Hook Documenter
 
+![Travis Build](https://api.travis-ci.org/ffmengineering/hookdocumenter.svg?branch=master "Travis Build")
+
 document various hook types like observers and aspects for several types of frameworks
 
 ## Support

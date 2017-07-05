@@ -35,7 +35,7 @@ class Markdown implements TableInterface
     public function getBody(): string
     {
         $output = '';
-        array_walk($this->rows, function($row) use (&$output) {
+        array_walk($this->rows, function ($row) use (&$output) {
             /** @var TableRow $row */
             $output .= '| ' . implode(' | ', $row->getCellValues($row::FORMAT_MARKDOWN)) . ' |' . PHP_EOL;
         });
