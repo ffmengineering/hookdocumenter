@@ -22,5 +22,6 @@ note: for support, please use the [Issue Tracker](https://github.com/ffmengineer
 Contributions are more than welcome. Make a Pull Request to help out
 
 ## Roadmap 
+- Add short technical analysis on the method attached (Sets order data, loads X objects, etc)
 - Magento 2 Observers
 - Magento 2 Plugins
