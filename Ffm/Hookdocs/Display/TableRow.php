@@ -6,6 +6,7 @@ class TableRow
 {
     const FORMAT_HTML = 1;
     const FORMAT_MARKDOWN = 2;
+    const FORMAT_CONFLUENCE = 3;
 
     protected $source;
     protected $method;
@@ -29,10 +30,21 @@ class TableRow
     }
 
     /**
+     * Format the row values
+     *
      * @param int $format
      * @return array
      */
     public function getCellValues(int $format = 0): array
+    {
+        return [trim($this->source), $this->getLink($format), $this->getDescription()];
+    }
+
+    /**
+     * @param int $format
+     * @return string
+     */
+    public function getLink(int $format): string
     {
         switch ($format) {
             case self::FORMAT_HTML:
@@ -41,11 +53,27 @@ class TableRow
             case self::FORMAT_MARKDOWN:
                 $link = "[{$this->method}]({$this->link})";
                 break;
+            case self::FORMAT_CONFLUENCE:
+                $link = "[{$this->method}|{$this->link}]";
+                break;
             default:
                 $link = $this->method;
                 break;
         }
 
-        return [$this->source, $link, $this->description];
+        return $link;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        $description = trim($this->description);
+        if (!strlen($description)) {
+            $description = 'N/A';
+        }
+
+        return $description;
     }
 }
