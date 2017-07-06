@@ -19,6 +19,7 @@ class TableRowTest extends TestCase
 
         $this->assertEquals(['source','<a href="link">method</a>','description',], $row->getCellValues($row::FORMAT_HTML));
         $this->assertEquals(['source','[method](link)','description',], $row->getCellValues($row::FORMAT_MARKDOWN));
+        $this->assertEquals(['source','[method|link]','description',], $row->getCellValues($row::FORMAT_CONFLUENCE));
         $this->assertEquals(['source','method','description',], $row->getCellValues());
     }
 }
